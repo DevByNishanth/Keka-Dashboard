@@ -4,6 +4,9 @@ import EmployeeDetails from "./components/EmployeeDetails";
 import MyDetails from "./Pages/MyDetails";
 import { Routes, Route } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
+import AdminDashboard from "./Pages/AdminDashboard";
+
+import EditForm from "./components/EditForm";
 const App = () => {
   return (
     <>
@@ -21,8 +24,12 @@ const App = () => {
               </>
             }
           ></Route>
-          <Route path="/dashboard" element={<MyDetails/>}></Route>
+          <Route path="/dashboard" element={<MyDetails />}></Route>
+          <Route path="/AdminDashboard" element={<AdminDashboard />}></Route>
+          <Route path="/employeeDetails" element={<EmployeeDetails />}></Route>
         </Routes>
+
+        {/* <EditForm/> */}
       </div>
     </>
   );

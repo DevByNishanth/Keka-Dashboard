@@ -1,88 +1,90 @@
-import React from "react";
+import React, { useContext } from "react";
 import user from "../assets/user-quality.png";
 import organizaton from "../assets/organization.svg";
 import phone from "../assets/phone.svg";
 import location from "../assets/location.svg";
 import mail from "../assets/mail.svg";
+import { Data } from "../context/store";
 const EmployeeDetails = () => {
-  let employeeDetailsData = [
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-    {
-      img: user,
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "Quantum Pulse Technologies",
-      location: "Sri eshwar college of engineering",
-      email: "abc@gmai.com",
-      phone: 1234567890,
-    },
-  ];
+  const { employeeDetils, setemployeeDetails } = useContext(Data);
+  // let employeeDetailsData = [
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  //   {
+  //     img: user,
+  //     name: "Surya Chandran",
+  //     designation: "Designer",
+  //     department: "Quantum Pulse Technologies",
+  //     location: "Sri eshwar college of engineering",
+  //     email: "abc@gmai.com",
+  //     phone: 1234567890,
+  //   },
+  // ];
   return (
     <>
       <div className="main-container mt-2 grid sm:grid-cols-2 md:grid-cols-3 gap-3 font-lato  sm:h-[490px] overflow-auto hide-scrollbar">
-        {employeeDetailsData.map((item, index) => {
+        {employeeDetils.map((item, index) => {
           return (
             <div className="card bg-[#F5FAFD] rounded-xl p-2 ">
               <div className="header flex items-center gap-3 pb-3 border-b-2 border-gray-300">

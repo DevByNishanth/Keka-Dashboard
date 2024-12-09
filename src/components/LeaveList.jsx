@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";  // Import Axios
+import axios from "axios";
 import leaves from "../assets/leaves.svg";
 import sickLeave from "../assets/sick-leave.svg";
 import vacationLeave from "../assets/vacation-leave.svg";
@@ -7,40 +7,25 @@ import search from "../assets/search-icon.svg";
 import plus from "../assets/plus-icon.svg";
 import LeaveListTable from "./LeaveListTable";
 import closeIcon from "../assets/close-icon.svg";
+import EditLeave from "./EditLeave";
+import { Data } from "../context/store";
+import { useContext } from "react";
 const LeaveList = ({ showTint, setShowTint }) => {
+  const { employeeLeaveDetails, setemployeeLeaveDetails } = useContext(Data);
+  // const [filterStatus, setFilterStatus] = useState("");
   const [selectedTime, setSelectedTime] = useState("fullDay");
-  const first_half = useRef(null);
-  const second_half = useRef(null);
-  const [fullTimeBg, setFullTimeBg] = useState(true);
-  const [customBg, setCustomBg] = useState(false);
-  let leave_time;
-  const [opendropdown, setOpenDropdown] = useState(false);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  function handlebg() {
-    if (first_half) {
-      setCustomBg(true);
-    } else if (second_half) {
-      setCustomBg(true);
-    } else {
-      setCustomBg(false);
-    }
-  }
-  function handleDropdown() {
-    if (customBg) {
-      setOpenDropdown(true);
-    }
-  }
 
   const handleTimeChange = (e) => {
     setSelectedTime(e.target.value);
   };
-
-  const [showLeaveApplyModal, setShowLeaveApplyModal] = useState(false);
-  const handleDeleteLeave = (id) => {
-    const updatedLeaves = leaveData.filter((leave) => leave.id !== id);
-    setLeaveData(updatedLeaves);
+  const handleDeleteLeave = (leaveId) => {
+    const updatedLeaves = employeeLeaveDetails.filter(
+      (leave) => leave.id !== leaveId
+    );
+    setemployeeLeaveDetails(updatedLeaves); // Update the context with filtered data
   };
+  const [showLeaveApplyModal, setShowLeaveApplyModal] = useState(false);
+
   function handleTint() {
     setShowTint(true);
   }
@@ -53,8 +38,7 @@ const LeaveList = ({ showTint, setShowTint }) => {
   function handleModal() {
     setShowLeaveApplyModal(true);
   }
- 
-   
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [leaveData, setLeaveData] = useState([
@@ -128,7 +112,6 @@ const LeaveList = ({ showTint, setShowTint }) => {
     (leave) => leave.type === "Annual Leave"
   ).length;
 
-
   const [formData, setFormData] = useState({
     fromDate: "",
     toDate: "",
@@ -146,14 +129,24 @@ const LeaveList = ({ showTint, setShowTint }) => {
   };
 
   const handleSubmitLeave = () => {
-    // Here you can use axios to send data to API endpoint
-    console.log("Runing....")
+    // Prepare the data to be sent to the API
+    const requestData = {
+      type: formData.leaveType,
+      from: formData.fromDate,
+      to: formData.toDate,
+      reason: formData.notes,
+      status: "Pending", // Default status for new leaves
+    };
+
     axios
-      .post("https://your-api-endpoint.com/submit-leave", formData)
+      .post("https://your-api-endpoint.com/submit-leave", requestData)
       .then((response) => {
-        console.log("Leave applied successfully:", response.data);
-        // Close modal and reset form if successful
-        setShowLeaveApplyModal(false);
+        const newLeave = response.data; // Assume the server responds with the saved leave data
+
+        // Update the context state with the new leave
+        setemployeeLeaveDetails((prevDetails) => [...prevDetails, newLeave]);
+
+        // Reset the form and close modal
         setFormData({
           fromDate: "",
           toDate: "",
@@ -162,10 +155,12 @@ const LeaveList = ({ showTint, setShowTint }) => {
           notes: "",
           notify: "",
         });
+        setShowLeaveApplyModal(false);
         handleCloseTint();
       })
       .catch((error) => {
         console.error("Error applying leave:", error);
+        alert("There was an issue applying the leave. Please try again.");
       });
   };
 
@@ -258,7 +253,7 @@ const LeaveList = ({ showTint, setShowTint }) => {
         </div>
 
         <LeaveListTable
-          leaves={filteredLeaves}
+          filterStatus={filterStatus}
           setShowTint={setShowTint}
           handleDeleteLeave={handleDeleteLeave}
         />
@@ -323,7 +318,6 @@ const LeaveList = ({ showTint, setShowTint }) => {
                 <option value="Casual Leave">Casual Leave</option>
                 <option value="Annual Leave">Annual Leave</option>
               </select>
-
               <div className="time-period flex items-center gap-3 bg-gray-50 px-2 py-2 w-[300px] rounded-lg">
                 <div className="full-time w-[50%]">
                   <button
@@ -331,7 +325,7 @@ const LeaveList = ({ showTint, setShowTint }) => {
                     className={`w-[100%] px-3 py-1 rounded-lg ${
                       selectedTime === "fullDay"
                         ? "bg-white shadow-sm text-black"
-                        : "text-gray-400"
+                        : "text-gray-400 bg-gray-100"
                     }`}
                   >
                     Full Day
@@ -382,7 +376,6 @@ const LeaveList = ({ showTint, setShowTint }) => {
                 <option>Sarfaras Sir</option>
                 <option>AnandhKumar Sir</option>
               </select>
-
               <div className="button-parent-section  relative ">
                 <div className="button-section w-fit absolute  right-0  flex items-center gap-4 mt-3">
                   <button
