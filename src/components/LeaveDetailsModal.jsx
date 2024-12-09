@@ -21,30 +21,34 @@ const LeaveDetailsModal = ({
   const handleRequestUpdate = async (updatedLeave) => {
     try {
       // Assuming your API endpoint is something like `https://api.example.com/leaves/${leave.id}`
-      const response = await axios.put(`https://api.example.com/leaves/${leave.id}`, updatedLeave, {
-        headers: {
-          'Content-Type': 'application/json',
-          // Add any other necessary headers, like authorization tokens, etc.
-        },
-      });
-  
+      const response = await axios.put(
+        `https://api.example.com/leaves/${leave.id}`,
+        updatedLeave,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Add any other necessary headers, like authorization tokens, etc.
+          },
+        }
+      );
+
       // Optionally, handle the response from the API
       if (response.status === 200) {
-        console.log('Leave updated successfully:', response.data);
+        console.log("Leave updated successfully:", response.data);
         // Update the local state or context with the updated leave data
         updateLeave(response.data);
         setOpenEditModal(false);
         onClose();
         setShowTint(false);
       } else {
-        console.error('Failed to update leave:', response.status);
+        console.error("Failed to update leave:", response.status);
       }
     } catch (error) {
-      console.error('Error updating leave:', error);
-      alert('An error occurred while updating the leave.');
+      console.error("Error updating leave:", error);
+      alert("An error occurred while updating the leave.");
     }
   };
-  
+
   function removeCurrentModal() {
     setOpenCurrentModal(false);
   }

@@ -10,6 +10,7 @@ import closeIcon from "../assets/close-icon.svg";
 import EditLeave from "./EditLeave";
 import { Data } from "../context/store";
 import { useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
 const LeaveList = ({ showTint, setShowTint }) => {
   const { employeeLeaveDetails, setemployeeLeaveDetails } = useContext(Data);
   // const [filterStatus, setFilterStatus] = useState("");
@@ -19,11 +20,24 @@ const LeaveList = ({ showTint, setShowTint }) => {
     setSelectedTime(e.target.value);
   };
   const handleDeleteLeave = (leaveId) => {
-    const updatedLeaves = employeeLeaveDetails.filter(
-      (leave) => leave.id !== leaveId
-    );
-    setemployeeLeaveDetails(updatedLeaves); // Update the context with filtered data
+    // Make an API call to delete the leave from the database
+    axios
+      .delete(`https://your-api-endpoint.com/delete-leave/${leaveId}`)
+      .then((response) => {
+        // If deletion was successful, filter the local state and update context
+        const updatedLeaves = employeeLeaveDetails.filter(
+          (leave) => leave.id !== leaveId
+        );
+        setemployeeLeaveDetails(updatedLeaves); // Update the context with filtered data
+
+        alert("Leave deleted successfully");
+      })
+      .catch((error) => {
+        console.error("Error deleting leave:", error);
+        alert("There was an issue deleting the leave. Please try again.");
+      });
   };
+
   const [showLeaveApplyModal, setShowLeaveApplyModal] = useState(false);
 
   function handleTint() {
@@ -135,9 +149,11 @@ const LeaveList = ({ showTint, setShowTint }) => {
       from: formData.fromDate,
       to: formData.toDate,
       reason: formData.notes,
+      leave_id: uuidv4(),
+      notify: formData.notify,
       status: "Pending", // Default status for new leaves
     };
-
+    console.log(requestData);
     axios
       .post("https://your-api-endpoint.com/submit-leave", requestData)
       .then((response) => {

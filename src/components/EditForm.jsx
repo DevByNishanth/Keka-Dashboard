@@ -24,17 +24,16 @@ const EditForm = ({ leave, onRequestUpdate, onClose }) => {
       status: formData.status, // Ensure this property is defined or updated as needed
       timePeriod: selectedTime, // Include if you need this information
     };
-  
+
     onRequestUpdate(updatedLeave);
   };
-  
 
   return (
     <>
       <div className="leave-apply-modal font-lato text-[#222222] fixed top-[2%] sm:top-[1%] left-[50%] translate-x-[-50%] bg-white shadow-lg rounded-lg border sm:w-[95%] md:w-[80%] h-[96vh] max-sm:w-[95%] max-sm:h-[95%]">
         <div className="header flex items-center justify-between p-3 border-bottom">
           <h1 className="text-[20px] text-[#222222]">Apply Leave</h1>
-          <div className="close-icon bg-[#D9D9D9] px-[10px] py-[10px] rounded-full w-fit cursor-pointer">
+          <div onClick={onclose} className="close-icon bg-[#D9D9D9] px-[10px] py-[10px] rounded-full w-fit cursor-pointer">
             <img src={closeIcon} alt="Close" />
           </div>
         </div>
