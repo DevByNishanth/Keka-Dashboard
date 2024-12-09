@@ -59,7 +59,9 @@ const LeaveDetailsModal = ({
     setShowTint(false);
   }
 
-  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openEditFormModalFinal, setopenEditFormModalFinal] = useState(false)
+
+  // const [openEditModal, setOpenEditModal] = useState(false);
   return (
     <>
       <div
@@ -128,7 +130,8 @@ const LeaveDetailsModal = ({
           <div className="button-section flex items-center gap-3 max-sm:mt-2">
             <button
               onClick={() => {
-                setOpenEditModal(true);
+                // setOpenEditModal(true);
+                setopenEditFormModalFinal(true);
                 removeCurrentModal();
               }}
               className="edit-btn bg-[#44CF7DCC] h-[40px] flex items-center w-[50%] md:w-[100px] rounded-lg"
@@ -155,10 +158,12 @@ const LeaveDetailsModal = ({
         </div>
       </div>
 
-      {openEditModal ? (
+      {openEditFormModalFinal ? (
         <EditForm
           leave={leave}
           onRequestUpdate={handleRequestUpdate}
+          setopenEditFormModalFinal={setopenEditFormModalFinal}
+          openEditFormModalFinal={openEditFormModalFinal}
           onClose={() => {
             setOpenEditModal(false);
             setShowTint(false);

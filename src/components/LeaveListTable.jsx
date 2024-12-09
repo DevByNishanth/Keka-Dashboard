@@ -26,6 +26,8 @@ const LeaveListTable = ({ leaves, setShowTint,  handleDeleteLeave, filterStatus 
     setSelectedLeave(null); // Clear the selected leave
   };
 
+  
+ 
   return (
     <div className="flex rounded-lg border mt-5 w-full h-[263px]">
       <div className="overflow-x-auto rounded-lg w-full overflow-y-auto scrollbar-hide hide-scrollbar">
